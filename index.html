@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قوانين الشرطة - كراون سيتي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #050505; /* لون خلفية داكن جداً وفخم */
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            margin: 0;
+            position: relative;
+        }
+
+        /* --- تنسيق UI الاحترافي للأيقونات العلوية (فوق يسار) --- */
+        .top-left-nav {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            display: flex;
+            gap: 20px; /* مسافة بين الأيقونات */
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(26, 26, 46, 0.8); /* خلفية زجاجية داكنة */
+            border: 1px solid rgba(255, 255, 255, 0.1); /* حدود خفيفة جداً */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            margin-bottom: 8px; /* مسافة للاسم بالأسفل */
+            transition: all 0.4s ease;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* نص الاسم تحت الأيقونة */
+        .nav-label {
+            color: #a0a0a8;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            transition: 0.3s;
+        }
+
+        /* تأثير الفخامة والتوهج عند تمرير الماوس (Hover) */
+        .nav-item:hover .nav-icon {
+            transform: translateY(-5px); /* ارتفاع بسيط للأعلى */
+            background: rgba(35, 35, 60, 1);
+        }
+
+        .nav-item:hover .nav-label {
+            color: white;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+        }
+
+        /* ألوان حدود وتوهج مخصصة لكل أيقونة عند الحوم */
+        .rules-item:hover .nav-icon { 
+            border-color: #00bcd4; 
+            box-shadow: 0 0 20px rgba(0, 188, 212, 0.6); 
+        }
+        .shop-item:hover .nav-icon { 
+            border-color: #ff9800; 
+            box-shadow: 0 0 20px rgba(255, 152, 0, 0.6); 
+        }
+        .discord-item:hover .nav-icon { 
+            border-color: #5865F2; 
+            box-shadow: 0 0 20px rgba(88, 101, 242, 0.6); 
+        }
+
+        /* --- تنسيق الشعار والعناوين --- */
+        .logo-container {
+            margin-bottom: 20px;
+            margin-top: 20px; /* مسافة إضافية بسبب الأيقونات العلوية */
+        }
+
+        .logo-img {
+            width: 100px; /* حجم متناسق للشعار */
+            height: auto;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 86, 179, 0.5);
+            box-shadow: 0 0 20px rgba(0, 86, 179, 0.6);
+            filter: drop-shadow(0 0 10px rgba(0, 86, 179, 0.3));
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        .header p {
+            color: #4a9eff;
+            font-size: 14px;
+        }
+
+        .main-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(0, 86, 179, 0.5);
+        }
+
+        /* --- تنسيق القائمة المنسدلة (Accordion) --- */
+        .accordion-container {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .accordion-item {
+            background-color: #0c0c0e; /* لون أغمق قليلاً للخلفية */
+            border: 1px solid #1a1a1d;
+            border-radius: 12px; /* زوايا أنعم */
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-header {
+            padding: 22px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .accordion-header:hover {
+            background-color: #141417;
+        }
+
+        .accordion-header h3 {
+            margin: 0;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+        }
+
+        .icon-left {
+            color: #4a9eff;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: #080809;
+            padding: 0 25px;
+        }
+
+        .accordion-content ul {
+            padding: 20px 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .accordion-content li {
+            margin-bottom: 14px;
+            padding-right: 15px;
+            border-right: 3px solid #0056b3;
+            color: #d1d1d1;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* حالة النشاط (عند الفتح) */
+        .accordion-item.active {
+            border-color: #0056b3;
+            background-color: #111114;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 1000px;
+            padding-bottom: 15px;
+        }
+
+        .highlight-blue {
+            color: #4a9eff;
+            font-weight: bold;
+        }
+
+        /* تنسيق الجدول */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: #0c0c0e;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        td, th {
+            border: 1px solid #1f1f23;
+            padding: 12px;
+            text-align: center;
+        }
+        th { background: #1a1a1d; color: #4a9eff; font-weight: bold; }
+
+        /* تلوين التحذيرات بالأحمر لتمييزها */
+        .warning-header h3, .warning-header .icon-left {
+            color: #ff4d4d !important;
+        }
+        .warning-item.active {
+            border-color: #ff4d4d !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-left-nav">
+        <a href="https://sdsfa360-crypto.github.io/Crown-City/" target="_blank" class="nav-item rules-item">
+            <div class="nav-icon">
+                <i class="fas fa-book"></i>
+            </div>
+            <span class="nav-label">القوانين العامة</span>
+        </a>
+
+        <a href="https://cc.thta.shop/products" target="_blank" class="nav-item shop-item">
+            <div class="nav-icon">
+                <i class="fas fa-shopping-cart"></i>
+            </div>
+            <span class="nav-label">المتجر</span>
+        </a>
+
+        <a href="https://discord.com/invite/r-cc" target="_blank" class="nav-item discord-item">
+            <div class="nav-icon">
+                <i class="fab fa-discord"></i>
+            </div>
+            <span class="nav-label">ديسكورد</span>
+        </a>
+    </div>
+
+    <div class="logo-container">
+        <img src="police_logo.png" alt="Crown City Logo" class="logo-img">
+    </div>
+
+    <div class="header">
+        <h1>قوانين كراون سيتي</h1>
+        <p>الرئيسية > <span style="color:white">القوانين</span></p>
+    </div>
+
+    <div class="main-title">قوانين الشرطة</div>
+
+    <div class="accordion-container">
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h3>القوانين</h3>
+                <span class="icon-left">+</span>
+            </div>
+            <div class="accordion-content">
+                <ul>
+                    <li> (1) عدم التسلط على المواطنين والرتب الأقل منك والاحترام المتبادل واجب .</li>
+                    <li> (2) الجدية في العمل وتقمص شخصية العسكري لأبعد حد (رول بلاي واقعي) </li>
+                    <li> (3) يمنع بيع أو إعطاء معدات الشرطة للمواطنين <span class="highlight-blue">(باند نهائي)</span>.</li>
+                    <li> (4) ممنوع عصيان أوامر الرتب العليا بتاتاً .</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h3>🚔 المركبات والمطاردات</h3>
+                <span class="icon-left">+</span>
+            </div>
+            <div class="accordion-content">
+                <ul>
+                    <li>(1).الالتزام بمركبات رتبتك فقط ومخالفة ذلك تعرضك للمحاسبة.</li>
+                    <li> (2) يمنع استخدام سيارات المواطنين.</li>
+                    <li> (3) في المطاردة يمنع الصدم المتعمد ويجب الحفاظ على مسافة آمنة.</li>
+                    <li> (4) يمنع إطلاق النار في المطاردة إلا بعد مرور <span class="highlight-blue">6 دقائق</span> أو إذا بدأ الهارب بالإطلاق.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h3>🔫 متى يحق لك استعمال الثقيل</h3>
+                <span class="icon-left">+</span>
+            </div>
+            <div class="accordion-content">
+                <ul>
+                    <li> (1) في حال خصمك استعمل الثقيل </li>
+                    <li> (2) يحق لك استعمال الثقيل اذا جاك امر من ملازم وا فوق</li>
+                    <li> (3) في حال مداهمة قسم العمووم يستخدم الثقيل .</li>
+                      <li> (4) في حال خطف عسكري يستعملون الثقيل 2 .</li>
+                    <li> (5) في حال خطف ضابط يحق لك 3 الوحدات يستخدمون الثقيل .</li>
+                    (6) في حال خطف قائد الشرطه و نائب يستعملون الثقيل 5 .</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h3>💎 حدود الوحدات في السرقات</h3>
+                <span class="icon-left">+</span>
+            </div>
+            <div class="accordion-content">
+                <table>
+                    <tr><th>نوع البلاغ</th><th>الحد الأقصى للوحدات</th></tr>
+                    <tr><td>سرقة بقالة / بيت</td><td>(المجرمين4) 5 وحدات</td></tr>
+                    <tr><td>صراف صغير</td><td>(المجرمين2) 3 وحدات</td></tr>
+                    <tr><td>المجوهرات</td><td>(المجرمين5) 7 وحدات</td></tr>
+                    <tr><td>البنك</td><td> (المجرمين6) 8 وحدة</td></tr>
+                    <tr><td>البنك المركزي</td><td>وحدة10 (المجرمين8) </td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="accordion-item warning-item">
+          <div class="accordion-header warning-header">
+             <h3>التحذيرات العسكريه</h3>
+             <span class="icon-left">+</span>
+          </div>
+          <div class="accordion-content">
+            <p> (1) في حال قطعت بلاغ زميلك راح يتم انزل تحذيرين </p>
+            <P> (2) عدم الرد في الموجه راح يتم انزل تحذيرين </P>
+            <P> (3) عدم تشغيل البودي كام راح يتم انزل تحذيرين </P>
+            <P> (4) القبض على مجرم دون ذكر حقوقه وا التهم يتم انزل ثلاث تحذيرات</P>
+            <p> (5) في حال استهبالك في الميدان راح يتم انزل ثلاث تحذيرات </p>
+            <p> (6) في حال تعديت المراجع راح يتم انزل ثلاث تحذيرات</p>
+            <p> (7) في حال قطعت بلاغ قيادات راح تنكسر رتبه</p>
+            <p> (8) في حال استهبالك في الصطفاف راح تنكسر رتبه</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h3>🛑 مفشلات الهروب الآمن</h3>
+                <span class="icon-left">+</span>
+            </div>
+            <div class="accordion-content">
+                <ul>
+                    <li> (1) تغيير المركبة أو الدخول لورشة التصليح.</li>
+                    <li> (2) التوجه للبحر بشكل واضح أو القفزات الانتحارية.</li>
+                    <li> (3) تهديد حياة المواطنين بعكس السير أو الصدم المتعمد.</li>
+                    <li> (4) الصعود على الارصفة الحد الاقصى 3 ارصفه</li>
+                    <li> (5) الدخول الى اماكن ضيقة او انفاق </li>
+                    <li> (6) الندخل الخارجي </li>
+                    <li> (7) العكسات الاحد الاقصى 3 عكسات </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // كود بسيط ومحسن لتشغيل القوائم المنسدلة
+        document.querySelectorAll('.accordion-header').forEach(button => {
+            button.addEventListener('click', () => {
+                const accordionItem = button.parentElement;
+                
+                // لإغلاق القوائم الأخرى عند فتح قائمة جديدة (اختياري، تم إلغاء تفعيله لراحة المستخدم)
+                /*
+                document.querySelectorAll('.accordion-item').forEach(item => {
+                    if (item !== accordionItem) {
+                        item.classList.remove('active');
+                        item.querySelector('.icon-left').textContent = '+';
+                    }
+                });
+                */
+
+                accordionItem.classList.toggle('active');
+                
+                const icon = button.querySelector('.icon-left');
+                icon.textContent = accordionItem.classList.contains('active') ? '-' : '+';
+            });
+        });
+    </script>
+</body>
+</html>
